@@ -4,7 +4,7 @@
 <body>
 
 <p>Input any sentence and click to read its Compromise.js(NLP framework) created past tense equivalent</p>
-<input id="userInput"></input>
+<input id="userInput" value="Where is he going?"></input>
 
 <button onclick="myFunction()">Past tense</button>
 
@@ -15,7 +15,9 @@ function myFunction() {
     var x = document.getElementById("userInput").value;
     document.getElementById("demo").innerHTML = x;
     var t = window.nlp(x).sentences().toPastTense()
-    document.getElementById("demo").innerHTML=(t.out('text'))  
+    var w = window.nlp(x).sentences().toFutureTense()
+    document.getElementById("demo").innerHTML=("<strong>Past Tense:    </strong>"+t.out('text')+"</br>"+"<strong>Future Tense:    </strong>"+w.out('text'))
+    //document.getElementById("demo").innerHTML=(w.out('text'))   
 }
 </script>
 
