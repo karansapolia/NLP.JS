@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
+<body>
+
+<p>Click the button get the text content of the button element.</p>
+<input id="userInput"></input>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("userInput").value;
+    document.getElementById("demo").innerHTML = x;
+    var t = window.nlp(x).sentences().toPastTense()
+    document.getElementById("demo").innerHTML=(t.out('text'))  
+}
+</script>
+
+</body>
+</html>
