@@ -1,25 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
-<body>
+  <head>
+     <div class="row">
+                <h1 class="text-primary text-center bg-primary">Natural Language Processing Demos for NITI <Portal></Portal></h1>
+            </div>
+      </head>
+<body class="container-fluid bg-danger">
 
-<p>Input any sentence and click to read its Compromise.js (that is NLP generated)  past and future tense equivalents</p>
+  <!--Tense Change-->
+<h4>Input any sentence and click to read its Compromise.js (that is NLP generated)  past and future tense equivalents</h4>
 <input id="userInput" value="Where is he going?"></input>
 
-<button onclick="myFunction()">Show in various tenses</button>
+<button onclick="tenseFunction()">Show in various tenses</button>
 
-<p id="demo"></p>
+<p id="tenseP"></p>
 
 <script>
-function myFunction() {
-    var x = document.getElementById("userInput").value;
-    document.getElementById("demo").innerHTML = x;
-    var t = window.nlp(x).sentences().toPastTense()
-    var w = window.nlp(x).sentences().toFutureTense()
-    document.getElementById("demo").innerHTML=("<strong>Past Tense:    </strong>"+t.out('text')+"</br>"+"<strong>Future Tense:    </strong>"+w.out('text'))
-    //document.getElementById("demo").innerHTML=(w.out('text'))   
+function tenseFunction() {
+    var tenseInput = document.getElementById("userInput").value;
+    document.getElementById("tenseP").innerHTML = tenseInput;
+    var t = window.nlp(tenseInput).sentences().toPastTense()
+    var w = window.nlp(tenseInput).sentences().toFutureTense()
+    document.getElementById("tenseP").innerHTML=("<strong>Past Tense:    </strong>"+t.out('text')+"</br>"+"<strong>Future Tense:    </strong>"+w.out('text'))
+       
 }
 </script>
 
+<!--Singular to Plural and vice-cersa-->
+<h4>Enter a sentence in singular form:</h4>
+<input id="singularInput" value="Michael and Adam are sitting by the lake"></input>
+
+<button onclick="singularFunction()">Singular / Plural</button>
+
+<p id="singularP"></p>
+<script>
+function singularFunction() {
+    var singularInput = document.getElementById("singularInput").value;
+
+    //document.getElementById("singularP").innerHTML = singularInp;
+    var r = window.nlp(singularInput);
+    pluralOP=r.nouns().toPlural();
+    //console.log(pluralOP)
+    document.getElementById("singularP").innerHTML=pluralOP.out('text');
+ }
+</script>
+
+<!-- Name-entity Recognition-->
+<h4>Name Entity Recognition</h4>
+<input id="entityInput" value="Mr. Jadhav first met Adam at the SPSS School"></input>
+
+<button onclick="entityFunction()">Name-Entity Recognition</button>
+
+<p id="entityP"></p>
+<script>
+function entityFunction() {
+    var entityInput = document.getElementById("entityInput").value;
+    var r= window.nlp(entityInput);
+    var entityOP=r.topics();
+    //remove possesives from the array
+    entityOP=entityOP.not('#Possesive');
+    //console.log(entityOP);
+    document.getElementById("entityP").innerHTML=entityOP.out('text');
+ }
+</script>
+
+<!--Number Interpretation -->
+<h4>Number interpretation</h4>
+<input id="numberInput" value="twenty second of May is the last date"></input>
+
+<button onclick="numberFunction()">Name-Entity Recognition</button>
+
+<p id="numberP"></p>
+<script>
+function numberFunction() {
+    var numberInput = document.getElementById("numberInput").value;
+    var r= window.nlp(numberInput);
+    var numberOP=r.values().toNumber();
+    //console.log(numberOP);
+    document.getElementById("numberP").innerHTML=numberOP.out('text');
+ }
+</script>
+
+<!--Negative sentences -->
+<h4>Negative Sentences</h4>
+<input id="negativeInput" value="Ron ran towards Hermione. Harry was taken aback."></input>
+
+<button onclick="negativeFunction()">Name-Entity Recognition</button>
+
+<p id="negativeP"></p>
+<script>
+function negativeFunction() {
+    var negativeInput = document.getElementById("negativeInput").value;
+    var r= window.nlp(negativeInput);
+    var negativeOP=r.sentences().toNegative();
+    //console.log(negativeOP);
+    document.getElementById("negativeP").innerHTML=negativeOP.out('text');
+ }
+</script>
 </body>
 </html>
